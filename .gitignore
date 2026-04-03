@@ -1,0 +1,21 @@
+# Sensitive files - NEVER commit
+.ssh/
+.bashrc_private
+*.key
+*.pem
+*.p12
+.env
+.env.*
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Python
+__pycache__/
+*.pyc
+
+# Backup metadata
+.last_backup
