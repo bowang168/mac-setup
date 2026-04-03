@@ -147,16 +147,19 @@ def backup_fonts(dry_run=False):
         warn("~/Library/Fonts/ 不存在")
         return
     if dry_run:
-        fonts = list(src.iterdir())
+        fonts = [f for f in src.rglob("*") if f.is_file() and not f.name.startswith(".")]
         info(f"[DRY-RUN] {len(fonts)} font files")
         return
+    if dst.exists():
+        shutil.rmtree(dst)
     dst.mkdir(parents=True, exist_ok=True)
-    for f in dst.iterdir():
-        f.unlink()
     count = 0
-    for f in sorted(src.iterdir()):
+    for f in sorted(src.rglob("*")):
         if f.is_file() and not f.name.startswith("."):
-            shutil.copy2(f, dst / f.name)
+            rel = f.relative_to(src)
+            target = dst / rel
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(f, target)
             count += 1
     info(f"已备份 {count} 个字体文件")
 

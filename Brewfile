@@ -41,7 +41,5 @@ cask "docker-desktop"
 cask "flux-app"
 # Terminal emulator that uses platform-native UI and GPU acceleration
 cask "ghostty"
-# Menu bar manager
-cask "jordanbaird-ice"
 # Quick Look generator for Markdown files
 cask "qlmarkdown"

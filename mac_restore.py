@@ -653,6 +653,27 @@ def main():
     print(f"  6. 登录 Docker Desktop")
     print(f"  7. 在 System Settings > Displays 配置显示器")
     print(f"  8. 配置 Shortcuts (快捷指令)")
+    print(f"  9. 启用 Finder 扩展: System Settings > General > Login Items & Extensions > Finder")
+    print(f"     确保 Shortcuts 中定义的 Quick Actions 已勾选")
+
+    print(f"\n{BOLD}{YELLOW}以下系统设置受 macOS 保护, defaults import 无法生效, 需手动确认:{RESET}")
+    print(f"  {BOLD}Accessibility (System Settings > Accessibility > Display):{RESET}")
+    print(f"    - Reduce transparency (减少透明度)")
+    print(f"    - Reduce motion (减少动态效果)")
+    print(f"    - Increase contrast (增强对比度)")
+    print(f"  {BOLD}Accessibility (System Settings > Accessibility):{RESET}")
+    print(f"    - Pointer Control > Mouse Keys (鼠标键)")
+    print(f"    - Keyboard > Slow Keys (慢速按键)")
+    print(f"    - Keyboard > Sticky Keys (粘滞键)")
+    print(f"    - Zoom (缩放)")
+    print(f"  {BOLD}Privacy & Security:{RESET}")
+    print(f"    - Accessibility 权限 (终端、AeroSpace、HyperKey 等)")
+    print(f"    - Full Disk Access 权限")
+    print(f"    - Input Monitoring 权限")
+    print(f"  {BOLD}其他:{RESET}")
+    print(f"    - Night Shift / True Tone (System Settings > Displays)")
+    print(f"    - 默认浏览器 (System Settings > Desktop & Dock)")
+    print(f"    - 锁屏密码 / Touch ID (System Settings > Lock Screen)")
 
 
 if __name__ == "__main__":
