@@ -440,7 +440,11 @@ def restore_defaults(dry_run=False, **_):
         'defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true',
         'defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true',
     ]
-    for cmd in screencapture_settings + desktopservices_settings:
+    # 点击桌面显示桌面: 0 = 仅在 Stage Manager 中, 1 = 始终
+    windowmanager_settings = [
+        'defaults write com.apple.WindowManager EnableStandardClickToShowDesktop -bool false',
+    ]
+    for cmd in screencapture_settings + desktopservices_settings + windowmanager_settings:
         if dry_run:
             info(f"[DRY-RUN] {cmd}")
         else:
@@ -448,6 +452,7 @@ def restore_defaults(dry_run=False, **_):
     if not dry_run:
         info("截图设置: 无阴影, 无缩略图, jpg 格式, 前缀 sc, 保存到 ~/Desktop")
         info("desktopservices: 禁止网络卷/USB 生成 .DS_Store")
+        info("WindowManager: 点击桌面显示桌面仅在 Stage Manager 中生效")
 
     if not dry_run:
         info("重启 Dock 和 Finder 使设置生效...")
