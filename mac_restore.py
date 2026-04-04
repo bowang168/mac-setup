@@ -7,6 +7,7 @@ mac_restore.py - macOS 个人设置一键恢复脚本
     python3 mac_restore.py --dry-run    # 预览恢复内容，不实际操作
     python3 mac_restore.py --yes        # 跳过确认，全部执行
     python3 mac_restore.py --only brew  # 只执行指定步骤
+    python3 mac_restore.py --pull-ollama-models  # 只拉取 Ollama 模型
 
 前置条件:
     1. 已从目标卷启动新 macOS
@@ -548,12 +549,44 @@ def restore_typora_themes(dry_run=False, **_):
     copy_dir(src, dst, dry_run)
 
 
-# ── 9. Ollama 模型 ───────────────────────────────────────────────────
+# ── 9. Hide Folders ────────────────────────────────────────────────
 
 
-@step("ollama", "9/10 Ollama 模型")
+@step("hidefolders", "9/10 隐藏 Home 目录文件夹")
+def restore_hide_folders(dry_run=False, **_):
+    section("9/10 隐藏 Home 目录文件夹")
+    folders = [
+        HOME / "Applications",
+        HOME / "Library",
+        HOME / "Movies",
+        HOME / "Music",
+        HOME / "Pictures",
+        HOME / "Public",
+        HOME / "miniconda3",
+        HOME / "comflowy",
+    ]
+    count = 0
+    for folder in folders:
+        if not folder.exists():
+            continue
+        if dry_run:
+            info(f"[DRY-RUN] chflags hidden {folder}")
+            count += 1
+            continue
+        rc, _ = run(f'chflags hidden "{folder}"')
+        if rc == 0:
+            count += 1
+        else:
+            error(f"chflags hidden 失败: {folder}")
+    info(f"已隐藏 {count} 个文件夹")
+
+
+# ── 10. Ollama 模型 (可选) ──────────────────────────────────────────
+
+
+@step("ollama", "10/10 Ollama 模型 (可选，耗时较长)")
 def restore_ollama_models(dry_run=False, **_):
-    section("9/10 Ollama 模型")
+    section("10/10 Ollama 模型")
 
     # 检查 Ollama 是否已安装 (通过 Brewfile cask 或手动)
     if not has_cmd("ollama"):
@@ -602,38 +635,6 @@ def restore_ollama_models(dry_run=False, **_):
             error(f"拉取失败: {m}")
 
 
-# ── 10. Hide Folders ────────────────────────────────────────────────
-
-
-@step("hidefolders", "10/10 隐藏 Home 目录文件夹")
-def restore_hide_folders(dry_run=False, **_):
-    section("10/10 隐藏 Home 目录文件夹")
-    folders = [
-        HOME / "Applications",
-        HOME / "Library",
-        HOME / "Movies",
-        HOME / "Music",
-        HOME / "Pictures",
-        HOME / "Public",
-        HOME / "miniconda3",
-        HOME / "comflowy",
-    ]
-    count = 0
-    for folder in folders:
-        if not folder.exists():
-            continue
-        if dry_run:
-            info(f"[DRY-RUN] chflags hidden {folder}")
-            count += 1
-            continue
-        rc, _ = run(f'chflags hidden "{folder}"')
-        if rc == 0:
-            count += 1
-        else:
-            error(f"chflags hidden 失败: {folder}")
-    info(f"已隐藏 {count} 个文件夹")
-
-
 # ── 主流程 ────────────────────────────────────────────────────────────
 
 
@@ -642,12 +643,13 @@ def main():
         description="macOS 个人设置一键恢复",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
-步骤: prereqs, brew, fonts, configs, omz, defaults, services, claude, typora, ollama, hidefolders
+步骤: prereqs, brew, fonts, configs, omz, defaults, services, claude, typora, hidefolders, ollama
 
 示例:
-  python3 mac_restore.py                    交互式恢复 (每步确认)
-  python3 mac_restore.py --yes              全部执行
+  python3 mac_restore.py                    交互式恢复 (每步确认, 不含 ollama)
+  python3 mac_restore.py --yes              全部执行 (不含 ollama)
   python3 mac_restore.py --only prereqs brew configs  只执行指定步骤
+  python3 mac_restore.py --pull-ollama-models         只拉取 Ollama 模型
   python3 mac_restore.py --dry-run          预览所有操作
 """,
     )
@@ -663,7 +665,17 @@ def main():
         choices=list(STEPS.keys()),
         help="只执行指定步骤",
     )
+    parser.add_argument(
+        "--pull-ollama-models",
+        action="store_true",
+        help="只拉取 ollama_models.txt 中定义的所有模型",
+    )
     args = parser.parse_args()
+
+    # --pull-ollama-models: 直接执行 ollama 步骤后退出
+    if args.pull_ollama_models:
+        restore_ollama_models(dry_run=args.dry_run)
+        return
 
     print(f"\n{BOLD}{'=' * 60}")
     print(f"  macOS Restore Script")
@@ -677,7 +689,11 @@ def main():
     if ts_file.exists():
         print(f"\n  上次备份时间: {ts_file.read_text().strip()}")
 
-    steps_to_run = args.only if args.only else list(STEPS.keys())
+    # 默认流程不含 ollama (耗时长，需单独 --pull-ollama-models 或 --only ollama)
+    if args.only:
+        steps_to_run = args.only
+    else:
+        steps_to_run = [s for s in STEPS.keys() if s != "ollama"]
 
     for step_name in steps_to_run:
         label, func = STEPS[step_name]

@@ -53,3 +53,5 @@ cask "qlmarkdown"
 cask "shottr"
 # System monitor for the menu bar
 cask "stats"
+# Customizable timing of breaks
+cask "time-out"
