@@ -41,5 +41,9 @@ cask "docker-desktop"
 cask "flux-app"
 # Terminal emulator that uses platform-native UI and GPU acceleration
 cask "ghostty"
+# Get up and running with large language models locally
+cask "ollama"
 # Quick Look generator for Markdown files
 cask "qlmarkdown"
+# Break reminders for RSI prevention
+cask "time-out"

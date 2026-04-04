@@ -155,7 +155,7 @@ python3 mac_restore.py --yes
 python3 mac_restore.py --only prereqs brew configs
 ```
 
-可选步骤: `prereqs`, `brew`, `fonts`, `configs`, `omz`, `defaults`, `services`, `claude`, `typora`, `ollama`, `display`
+可选步骤: `prereqs`, `brew`, `fonts`, `configs`, `omz`, `defaults`, `services`, `claude`, `typora`, `ollama`, `hidefolders`
 
 ### 3.3 手动恢复敏感文件
 
@@ -184,11 +184,13 @@ cp -r /Volumes/YOUR_USB/manual_backup/Personal_AI_Brain/ ~/d/Personal_AI_Brain/
 1. 打开 Brave (已通过 Brewfile 安装或手动安装)
 2. Settings > Sync > 扫码或输入同步链
 3. 等待书签、密码、扩展同步完成
+4. 安装 **Vimium** 扩展 (按 `f` 显示链接 hint，`j/k` 滚动)
 
 **Google Chrome:**
 1. 打开 Chrome
 2. 登录 Google 账号
 3. 同步设置
+4. 安装 **Vimium** 扩展
 
 ### 3.6 Docker Desktop
 
@@ -199,7 +201,7 @@ cp -r /Volumes/YOUR_USB/manual_backup/Personal_AI_Brain/ ~/d/Personal_AI_Brain/
 ### 3.7 配置显示器
 
 1. System Settings > Displays
-2. 参照 `display_info.txt` 和 1.3 节记录, 手动设置:
+2. 参照 `docs/flux-eye-health-guide.md` 和 1.3 节记录, 手动设置:
    - 分辨率和缩放
    - 显示器排列
    - Night Shift (如不使用 Flux)
@@ -237,7 +239,12 @@ ollama pull qwen3-embedding:0.6b
 | Neovim | `nvim`, 检查插件和主题 | [ ] |
 | Ghostty | 打开 Ghostty, 检查字体和配色 | [ ] |
 | AeroSpace | 检查窗口管理快捷键 | [ ] |
-| HyperKey | CapsLock 单击 = Esc, 长按 = Hyper | [ ] |
+| HyperKey | 确认以下设置 (defaults import 可能不生效): | [ ] |
+|        | - Remap physical key to hyper key: **caps lock** | |
+|        | - Quick press caps lock to execute: **esc** | |
+|        | - Include shift in hyper key: **ON** | |
+|        | - Open on login: **ON** | |
+|        | - Hide menu bar icon: **ON** | |
 | Git | `git config --list`, 检查用户名和 delta | [ ] |
 | SSH | `ssh -T git@github.com` | [ ] |
 | Homebrew | `brew doctor` | [ ] |
@@ -245,7 +252,7 @@ ollama pull qwen3-embedding:0.6b
 | Dock | 自动隐藏, 无动画 | [ ] |
 | Finder | 检查偏好设置 | [ ] |
 | 键盘快捷键 | System Settings > Keyboard > Shortcuts | [ ] |
-| Flux | 检查色温和时间设置 | [ ] |
+| Flux | 检查色温: 白天 3400K / 日落 2700K / 睡前 2300K | [ ] |
 | TextEdit | 打开, 确认纯文本模式 | [ ] |
 | Typora | 打开, 检查主题和设置 | [ ] |
 | Claude Code | `claude`, 检查 memory 和设置 | [ ] |
@@ -255,11 +262,67 @@ ollama pull qwen3-embedding:0.6b
 | Docker | `docker ps` | [ ] |
 | 讯飞输入法 | 切换输入法测试 | [ ] |
 | Brave | 检查书签和扩展 | [ ] |
+| 触控板三指拖移 | System Settings > Accessibility > Pointer Control > Trackpad Options > 三指拖移 | [ ] |
+| Accessibility 显示 | System Settings > Accessibility > Display: Reduce motion ✅ Reduce transparency ✅ | [ ] |
+| 截图设置 | 截一张图确认: jpg 格式, 前缀 sc, 无阴影, 保存到 ~/Desktop | [ ] |
+| 电池百分比 | System Settings > Control Center > Battery > Show Percentage: ON | [ ] |
+| Text Replacement | System Settings > Keyboard > Text Replacements (iCloud 同步, 确认已恢复) | [ ] |
 | 显示器 | 分辨率和缩放正确 | [ ] |
+| Time Out | 检查休息提醒配置 (见下方推荐) | [ ] |
 
 ---
 
-## 五、多卷启动切换
+## 五、视觉健康与护眼设置
+
+### 5.1 20-20-20 护眼法则
+
+**每 20 分钟，看 20 英尺 (6 米) 远处，持续 20 秒。**
+
+### 5.2 Time Out 推荐配置
+
+- **微休息**: 每 25 分钟提醒 20 秒 (看远处)
+- **长休息**: 每 90 分钟提醒 5 分钟 (离开屏幕走动)
+- 编译/等待 CI 时主动看远处
+
+### 5.3 f.lux 推荐设置
+
+| 时段 | 色温 |
+|------|------|
+| 白天 | Halogen 3400K |
+| 日落 | Tungsten 2700K |
+| 睡前 | Candle 2300K |
+
+### 5.4 Night Shift (蓝光过滤)
+
+```
+System Settings → Displays → Night Shift
+- Schedule: Sunset to Sunrise
+- Color Temperature: 中间偏暖
+```
+
+> 如果使用 f.lux 则可关闭 Night Shift，两者功能重叠。
+
+### 5.5 外接显示器亮度控制 — Lunar (参考)
+
+- `brew install --cask lunar`
+- Location Mode: 根据日出日落自动调节亮度
+- 使用 DDC 协议直接控制硬件亮度
+- 支持快捷键调节
+
+> 仅供参考，不强制安装。
+
+---
+
+## 六、指针和触控板推荐配置
+
+- **启用三指拖移**: 系统设置 → 辅助功能 → 指针控制 → 点击"触控板选项"，勾选"使用触控板拖移"，拖移方式选择"三指拖移"。无需按下即可用三指拖动窗口。
+- **调整指针大小与颜色**: 系统设置 → 辅助功能 → 显示 → 指针，拖动滑块设置大小，点击颜色井自定义轮廓和填充色。
+- **调整滚动方向**: 系统设置 → 触控板 → 点按与滚动，或系统设置 → 鼠标，开启/关闭"自然滚动"。
+- **调节跟踪速度和加速度**: 系统设置 → 鼠标或触控板，在"指针与点击"中拖动"跟踪速度"滑块；高级设置中可关闭指针加速度。
+
+---
+
+## 七、多卷启动切换
 
 | 操作 | 方法 |
 |------|------|
@@ -271,7 +334,7 @@ ollama pull qwen3-embedding:0.6b
 
 ---
 
-## 六、日常维护
+## 八、日常维护
 
 ### 定期更新备份
 
@@ -296,3 +359,18 @@ brew bundle dump --describe --force --file=~/dev/mac-setup/Brewfile
 # 重新导出变更的 defaults
 python3 mac_backup.py  # 会重新导出所有 defaults
 ```
+
+---
+
+## 九、常用但不直觉的快捷键
+
+| 快捷键 | 功能 |
+|--------|------|
+| `⌘ + ⇧ + .` | Finder 显示/隐藏隐藏文件 |
+| `⌘ + \`` | 在同一 app 的多个窗口间切换 |
+| `⌃ + ⌘ + Space` | 表情符号面板 |
+| `⌘ + ⌥ + Esc` | 强制退出 app |
+| `⌘ + ⇧ + 5` | 截图/录屏工具栏 |
+| `Space` (Finder 中) | Quick Look 预览文件 |
+| `⌥ + ⇧ + 音量/亮度` | 以 1/4 格精细调节 |
+| `⌘ + ⌥ + D` | 显示/隐藏 Dock |

@@ -216,6 +216,8 @@ def backup_defaults(dry_run=False):
         "abnerworks.Typora": "abnerworks.Typora",
         "bobko.aerospace": "bobko.aerospace",
         "com.anthropic.claudefordesktop": "com.anthropic.claudefordesktop",
+        "com.apple.screencapture": "screencapture",
+        "com.apple.desktopservices": "desktopservices",
     }
 
     dst_dir = REPO / "defaults"
@@ -365,19 +367,6 @@ def backup_oh_my_zsh_custom(dry_run=False):
                 copy_dir(item, dst / subdir_name / item.name, dry_run)
 
 
-def backup_display_info(dry_run=False):
-    section("11/11 Display Info (参考)")
-    dst = REPO / "display_info.txt"
-    if dry_run:
-        info("[DRY-RUN] system_profiler SPDisplaysDataType -> display_info.txt")
-        return
-    rc, stdout = run("system_profiler SPDisplaysDataType 2>/dev/null")
-    if rc == 0 and stdout:
-        dst.write_text(stdout)
-        info(f"显示器信息 -> {dst} (恢复时参考手动设置)")
-    else:
-        warn("无法获取显示器信息")
-
 
 def cmd_backup(args):
     """执行备份: system → repo"""
@@ -404,7 +393,6 @@ def cmd_backup(args):
     backup_shortcuts(args.dry_run)
     backup_ollama_models(args.dry_run)
     backup_oh_my_zsh_custom(args.dry_run)
-    backup_display_info(args.dry_run)
 
     if not args.dry_run:
         ts = REPO / ".last_backup"

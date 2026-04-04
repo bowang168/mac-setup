@@ -418,11 +418,36 @@ def restore_defaults(dry_run=False, **_):
         "abnerworks.Typora": "abnerworks.Typora",
         "bobko.aerospace": "bobko.aerospace",
         "com.anthropic.claudefordesktop": "com.anthropic.claudefordesktop",
+        "com.apple.screencapture": "screencapture",
+        "com.apple.desktopservices": "desktopservices",
     }
 
     for domain, filename in domain_map.items():
         plist = defaults_dir / f"{filename}.plist"
         defaults_import(domain, plist, dry_run)
+
+    # 截图优化 (plist 可能为空，用 defaults write 确保设置)
+    screencapture_settings = [
+        'defaults write com.apple.screencapture disable-shadow -bool true',
+        'defaults write com.apple.screencapture show-thumbnail -bool false',
+        'defaults write com.apple.screencapture type jpg',
+        'defaults write com.apple.screencapture name "sc"',
+        'defaults write com.apple.screencapture include-date -bool false',
+        f'defaults write com.apple.screencapture location -string "{HOME}/Desktop"',
+    ]
+    # 禁止在网络卷/USB 上生成 .DS_Store
+    desktopservices_settings = [
+        'defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true',
+        'defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true',
+    ]
+    for cmd in screencapture_settings + desktopservices_settings:
+        if dry_run:
+            info(f"[DRY-RUN] {cmd}")
+        else:
+            run(cmd)
+    if not dry_run:
+        info("截图设置: 无阴影, 无缩略图, jpg 格式, 前缀 sc, 保存到 ~/Desktop")
+        info("desktopservices: 禁止网络卷/USB 生成 .DS_Store")
 
     if not dry_run:
         info("重启 Dock 和 Finder 使设置生效...")
@@ -572,19 +597,36 @@ def restore_ollama_models(dry_run=False, **_):
             error(f"拉取失败: {m}")
 
 
-# ── 10. Display Info ─────────────────────────────────────────────────
+# ── 10. Hide Folders ────────────────────────────────────────────────
 
 
-@step("display", "10/10 显示器信息")
-def restore_display_info(dry_run=False, **_):
-    section("10/10 显示器信息 (参考)")
-    display_file = REPO / "display_info.txt"
-    if display_file.exists():
-        print(f"\n{YELLOW}已保存的显示器信息:{RESET}")
-        print(display_file.read_text())
-        print(f"\n{YELLOW}请在 System Settings > Displays 中手动配置分辨率和缩放。{RESET}")
-    else:
-        warn("display_info.txt 不存在")
+@step("hidefolders", "10/10 隐藏 Home 目录文件夹")
+def restore_hide_folders(dry_run=False, **_):
+    section("10/10 隐藏 Home 目录文件夹")
+    folders = [
+        HOME / "Applications",
+        HOME / "Library",
+        HOME / "Movies",
+        HOME / "Music",
+        HOME / "Pictures",
+        HOME / "Public",
+        HOME / "miniconda3",
+        HOME / "comflowy",
+    ]
+    count = 0
+    for folder in folders:
+        if not folder.exists():
+            continue
+        if dry_run:
+            info(f"[DRY-RUN] chflags hidden {folder}")
+            count += 1
+            continue
+        rc, _ = run(f'chflags hidden "{folder}"')
+        if rc == 0:
+            count += 1
+        else:
+            error(f"chflags hidden 失败: {folder}")
+    info(f"已隐藏 {count} 个文件夹")
 
 
 # ── 主流程 ────────────────────────────────────────────────────────────
@@ -595,7 +637,7 @@ def main():
         description="macOS 个人设置一键恢复",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
-步骤: prereqs, brew, fonts, configs, omz, defaults, services, claude, typora, ollama, display
+步骤: prereqs, brew, fonts, configs, omz, defaults, services, claude, typora, ollama, hidefolders
 
 示例:
   python3 mac_restore.py                    交互式恢复 (每步确认)
