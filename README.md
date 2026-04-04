@@ -32,7 +32,7 @@ Available steps: `prereqs`, `brew`, `fonts`, `configs`, `omz`, `defaults`, `serv
 |------------------|---------|
 | `mac_backup.py` | Automated backup: dotfiles, defaults, fonts, services, etc. |
 | `mac_restore.py` | Automated restore: Homebrew, configs, defaults, Claude Code, etc. |
-| `mac_backup_restore_steps.md` | Manual steps, verification checklist, eye health tips |
+| `human_step_guide.md` | Manual steps, verification checklist, eye health tips |
 | `Brewfile` | Homebrew packages and casks |
 | `configs/` | Dotfiles: zshrc, gitconfig, nvim, ghostty, aerospace, starship |
 | `defaults/` | macOS system preferences (plist exports) |
@@ -65,7 +65,7 @@ Some macOS settings are protected and cannot be restored via `defaults import`:
 - **Privacy & Security**: Accessibility/Full Disk Access permissions for apps
 - **Other**: Night Shift, default browser, Touch ID, Finder extensions for Shortcuts
 
-See `mac_backup_restore_steps.md` for the full checklist.
+See `human_step_guide.md` for the full checklist.
 
 ## License
 

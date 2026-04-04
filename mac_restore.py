@@ -707,7 +707,7 @@ def main():
     print(f"  脚本恢复部分完成!")
     print(f"{'=' * 60}{RESET}")
 
-    print(f"\n{BOLD}{YELLOW}请继续完成手动步骤 (详见 mac_backup_restore_steps.md):{RESET}")
+    print(f"\n{BOLD}{YELLOW}请继续完成手动步骤 (详见 human_step_guide.md):{RESET}")
     print(f"  1. 手动复制 ~/.ssh/ 和 ~/.bashrc_private")
     print(f"  2. 手动复制 ~/d/Personal_AI_Brain/")
     print(f"  3. 登录 Apple ID / iCloud")
