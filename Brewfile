@@ -9,6 +9,8 @@ brew "fd"
 brew "fzf"
 # GitHub command-line tool
 brew "gh"
+# Distributed revision control system
+brew "git"
 # Enable transparent encryption/decryption of files in a git repo
 brew "git-crypt"
 # Syntax-highlighting pager for git and diff output
@@ -41,9 +43,13 @@ cask "docker-desktop"
 cask "flux-app"
 # Terminal emulator that uses platform-native UI and GPU acceleration
 cask "ghostty"
+# Menu bar manager
+cask "jordanbaird-ice"
 # Get up and running with large language models locally
-cask "ollama"
+cask "ollama-app"
 # Quick Look generator for Markdown files
 cask "qlmarkdown"
-# Break reminders for RSI prevention
-cask "time-out"
+# Screenshot measurement and annotation tool
+cask "shottr"
+# System monitor for the menu bar
+cask "stats"

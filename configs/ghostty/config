@@ -49,7 +49,7 @@ keybind = ctrl+shift+alt+super+enter=ignore
 # 全局快捷键 - 随时呼出/隐藏
 keybind = global:cmd+grave_accent=toggle_quick_terminal
 keybind = global:super+shift+alt+ctrl+i=toggle_quick_terminal
-keybind = global:cmd+i=toggle_quick_terminal
+#keybind = global:cmd+i=toggle_quick_terminal
 
 # Quick Terminal 设置
 quick-terminal-position = top
