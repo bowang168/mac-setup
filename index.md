@@ -1,11 +1,15 @@
-# mac-setup
+---
+layout: default
+title: mac-setup
+---
 
-[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-support-yellow?style=flat-square&logo=buy-me-a-coffee)](https://buymeacoffee.com/bowang168)
-[![Sponsor](https://img.shields.io/badge/GitHub%20Sponsors-sponsor-ea4aaa?style=flat-square&logo=github-sponsors)](https://github.com/sponsors/bowang168)
+# mac-setup
 
 macOS backup & restore automation for a keyboard-driven, eye-friendly, minimal setup.
 
 **Scenario**: MacBook Pro M3 Pro — primary volume + clean macOS setup, backup & restore.
+
+---
 
 ## Quick Start
 
@@ -29,6 +33,8 @@ python3 mac_restore.py --only brew configs defaults
 
 Available steps: `prereqs`, `brew`, `fonts`, `configs`, `omz`, `defaults`, `services`, `claude`, `typora`, `ollama`, `hidefolders`
 
+---
+
 ## What's Included
 
 | Directory / File | Content |
@@ -46,6 +52,8 @@ Available steps: `prereqs`, `brew`, `fonts`, `configs`, `omz`, `defaults`, `serv
 | `bin/` | Custom scripts (theme toggle, app toggle) |
 | `docs/` | Reference docs (eye health guide, shortcuts, etc.) |
 
+---
+
 ## Key Tools
 
 **Terminal & Shell**: Ghostty, zsh + Oh My Zsh, Starship, Neovim
@@ -60,19 +68,31 @@ Available steps: `prereqs`, `brew`, `fonts`, `configs`, `omz`, `defaults`, `serv
 
 **AI**: Claude Code, Ollama (local LLMs)
 
-## What Requires Manual Setup
+---
 
-Some macOS settings are protected and cannot be restored via `defaults import`:
+## Manual Setup Guide
 
-- **Accessibility**: Reduce transparency, Reduce motion, three-finger drag
-- **Privacy & Security**: Accessibility/Full Disk Access permissions for apps
-- **Other**: Night Shift, default browser, Touch ID, Finder extensions for Shortcuts
+Some macOS settings are protected and cannot be restored via `defaults import`. See the full manual step guide for:
 
-See `human_step_guide.md` for the full checklist.
+- Backup & restore of sensitive files
+- External disk macOS installation
+- Post-restore verification checklist
+- Eye health & display settings
+- Multi-volume switching
 
-## Read Online
+**[Read the Full Manual Step Guide](step-guide)**
 
-[View on GitHub Pages](https://bowang168.github.io/mac-setup/) — Full guide with easy navigation
+---
+
+## About the Author
+
+**Bo Wang** — Principal Technical Support Engineer, based in Auckland, New Zealand.
+
+- [GitHub](https://github.com/bowang168)
+- [LinkedIn](https://linkedin.com/in/bowang168)
+- [Website](https://bowang168.github.io)
+
+---
 
 ## Support This Project
 
@@ -81,6 +101,8 @@ If this setup saved you time, consider:
 [![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-support-yellow?style=flat-square&logo=buy-me-a-coffee)](https://buymeacoffee.com/bowang168)
 [![Sponsor](https://img.shields.io/badge/GitHub%20Sponsors-sponsor-ea4aaa?style=flat-square&logo=github-sponsors)](https://github.com/sponsors/bowang168)
 
+---
+
 ## License
 
-MIT - Bo Wang
+[MIT](https://github.com/bowang168/mac-setup/blob/main/LICENSE) — Bo Wang

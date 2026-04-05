@@ -1,0 +1,16 @@
+title: mac-setup
+description: macOS backup & restore automation for a keyboard-driven, eye-friendly, minimal setup
+theme: jekyll-theme-cayman
+exclude:
+  - README.md
+  - mac_backup.py
+  - mac_restore.py
+  - Brewfile
+  - configs/
+  - defaults/
+  - claude/
+  - services/
+  - fonts/
+  - typora/
+  - bin/
+  - docs/
