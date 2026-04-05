@@ -18,7 +18,27 @@ python3 mac_backup.py           # 执行备份
 python3 mac_backup.py --dry-run # 先预览
 ```
 
-### 1.2 手动备份敏感文件
+### 1.2 手动备份字体
+
+字体文件较大且不适合存储在 git 仓库中，需手动备份。
+
+```bash
+# 备份所有自定义字体到加密 USB
+mkdir -p /Volumes/YOUR_USB/manual_backup/fonts
+cp -r ~/Library/Fonts/ /Volumes/YOUR_USB/manual_backup/fonts/
+```
+
+需要备份的关键字体（参见 `docs/Font-README.md`）:
+
+| 字体 | 用途 |
+|------|------|
+| MapleMono NF | 代码/终端（首选） |
+| InputMono / InputSans / InputSerif | 代码/UI/标题 |
+| 霞鹜文楷 (LXGWWenKai) | 中文长文阅读 |
+| 霞鹜文楷 Mono | 含中文注释的代码 |
+| 汉仪楷体S | 正式中文文档 |
+
+### 1.3 手动备份敏感文件
 
 将以下内容复制到 **加密 USB** 或其他安全存储:
 
@@ -33,7 +53,7 @@ cp ~/.bashrc_private /Volumes/YOUR_USB/manual_backup/
 cp -r ~/d/Personal_AI_Brain/ /Volumes/YOUR_USB/manual_backup/Personal_AI_Brain/
 ```
 
-### 1.3 记录当前显示器设置
+### 1.4 记录当前显示器设置
 
 打开 **System Settings > Displays**, 截图或记录:
 
@@ -46,7 +66,7 @@ cp -r ~/d/Personal_AI_Brain/ /Volumes/YOUR_USB/manual_backup/Personal_AI_Brain/
 | 排列方式 | ______ |
 | Night Shift 时间 | ______ |
 
-### 1.4 记录 Shortcuts (快捷指令)
+### 1.5 记录 Shortcuts (快捷指令)
 
 Shortcuts 数据存储在 iCloud/CoreData 中，无法直接文件备份。
 
@@ -58,7 +78,7 @@ Shortcuts 数据存储在 iCloud/CoreData 中，无法直接文件备份。
 - 脚本已导出名称列表到 `shortcuts_list.txt`
 - 复杂的快捷指令需要截图记录其步骤
 
-### 1.5 推送备份到 GitHub
+### 1.6 推送备份到 GitHub
 
 ```bash
 cd ~/dev/mac-setup
@@ -155,9 +175,26 @@ python3 mac_restore.py --yes
 python3 mac_restore.py --only prereqs brew configs
 ```
 
-可选步骤: `prereqs`, `brew`, `fonts`, `configs`, `omz`, `defaults`, `services`, `claude`, `typora`, `ollama`, `hidefolders`
+可选步骤: `prereqs`, `brew`, `configs`, `omz`, `defaults`, `services`, `claude`, `typora`, `ollama`, `hidefolders`
 
-### 3.3 手动恢复敏感文件
+### 3.3 手动恢复字体
+
+从加密 USB 恢复字体到 `~/Library/Fonts/`:
+
+```bash
+# 从加密 USB 恢复
+cp -r /Volumes/YOUR_USB/manual_backup/fonts/* ~/Library/Fonts/
+```
+
+**验证**: 打开 **Font Book** app，确认以下字体已安装:
+- MapleMono NF（终端和编辑器字体）
+- 霞鹜文楷 / 霞鹜文楷 Mono
+- InputMono / InputSans / InputSerif
+- 汉仪楷体S
+
+> 字体使用指南详见 `docs/Font-README.md`
+
+### 3.4 手动恢复敏感文件
 
 ```bash
 # 从加密 USB 恢复
@@ -172,13 +209,13 @@ mkdir -p ~/d
 cp -r /Volumes/YOUR_USB/manual_backup/Personal_AI_Brain/ ~/d/Personal_AI_Brain/
 ```
 
-### 3.4 配置讯飞输入法
+### 3.5 配置讯飞输入法
 
 1. 从 App Store 或官网下载讯飞输入法
 2. System Settings > Keyboard > Input Sources > 添加讯飞输入法
 3. 登录账号同步词库 (如果有)
 
-### 3.5 配置浏览器
+### 3.6 配置浏览器
 
 **Brave Browser:**
 1. 打开 Brave (已通过 Brewfile 安装或手动安装)
@@ -192,13 +229,13 @@ cp -r /Volumes/YOUR_USB/manual_backup/Personal_AI_Brain/ ~/d/Personal_AI_Brain/
 3. 同步设置
 4. 安装 **Vimium** 扩展
 
-### 3.6 Docker Desktop
+### 3.7 Docker Desktop
 
 1. 打开 Docker Desktop (已通过 Brewfile 安装)
 2. 登录 Docker Hub (如需要)
 3. 如有 compose 项目, clone 后 `docker compose up`
 
-### 3.7 配置显示器
+### 3.8 配置显示器
 
 1. System Settings > Displays
 2. 参照 `docs/flux-eye-health-guide.md` 和 1.3 节记录, 手动设置:
@@ -206,7 +243,7 @@ cp -r /Volumes/YOUR_USB/manual_backup/Personal_AI_Brain/ ~/d/Personal_AI_Brain/
    - 显示器排列
    - Night Shift (如不使用 Flux)
 
-### 3.8 恢复 Shortcuts (快捷指令)
+### 3.9 恢复 Shortcuts (快捷指令)
 
 **如果使用 iCloud 同步:**
 - 登录 Apple ID 后, 打开 Shortcuts app, 检查是否已同步
@@ -215,7 +252,7 @@ cp -r /Volumes/YOUR_USB/manual_backup/Personal_AI_Brain/ ~/d/Personal_AI_Brain/
 - 参照 `shortcuts_list.txt` 中的名称列表
 - 重新创建需要的快捷指令
 
-### 3.9 Ollama 模型
+### 3.10 Ollama 模型
 
 如果恢复脚本中跳过了 Ollama 步骤:
 
@@ -248,7 +285,7 @@ ollama pull qwen3-embedding:0.6b
 | Git | `git config --list`, 检查用户名和 delta | [ ] |
 | SSH | `ssh -T git@github.com` | [ ] |
 | Homebrew | `brew doctor` | [ ] |
-| Fonts | 打开 Font Book, 检查 MapleMono 等 | [ ] |
+| Fonts (手动) | 打开 Font Book, 检查 MapleMono 等 (见 3.3 节) | [ ] |
 | Dock | 自动隐藏, 无动画 | [ ] |
 | Finder | 检查偏好设置 | [ ] |
 | 键盘快捷键 | System Settings > Keyboard > Shortcuts | [ ] |

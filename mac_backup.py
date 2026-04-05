@@ -123,7 +123,7 @@ def defaults_export(domain, dst, dry_run=False):
 
 
 def backup_homebrew(dry_run=False):
-    section("1/10 Homebrew (Brewfile)")
+    section("1/9 Homebrew (Brewfile)")
     dst = REPO / "Brewfile"
     if dry_run:
         info("[DRY-RUN] brew bundle dump -> Brewfile")
@@ -139,33 +139,8 @@ def backup_homebrew(dry_run=False):
         error("brew bundle dump 失败")
 
 
-def backup_fonts(dry_run=False):
-    section("2/10 Fonts")
-    src = HOME / "Library" / "Fonts"
-    dst = REPO / "fonts"
-    if not src.exists():
-        warn("~/Library/Fonts/ 不存在")
-        return
-    if dry_run:
-        fonts = [f for f in src.rglob("*") if f.is_file() and not f.name.startswith(".")]
-        info(f"[DRY-RUN] {len(fonts)} font files")
-        return
-    if dst.exists():
-        shutil.rmtree(dst)
-    dst.mkdir(parents=True, exist_ok=True)
-    count = 0
-    for f in sorted(src.rglob("*")):
-        if f.is_file() and not f.name.startswith("."):
-            rel = f.relative_to(src)
-            target = dst / rel
-            target.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copy2(f, target)
-            count += 1
-    info(f"已备份 {count} 个字体文件")
-
-
 def backup_configs(dry_run=False):
-    section("3/10 Config Files")
+    section("2/9 Config Files")
 
     single_files = {
         HOME / ".zshrc": REPO / "configs" / ".zshrc",
@@ -200,7 +175,7 @@ def backup_configs(dry_run=False):
 
 
 def backup_defaults(dry_run=False):
-    section("4/10 macOS Defaults (系统偏好)")
+    section("3/9 macOS Defaults (系统偏好)")
 
     domains = {
         "com.apple.dock": "dock",
@@ -233,7 +208,7 @@ def backup_defaults(dry_run=False):
 
 
 def backup_services(dry_run=False):
-    section("5/10 Services (Automator Workflows)")
+    section("4/9 Services (Automator Workflows)")
     src = HOME / "Library" / "Services"
     dst = REPO / "services"
     if not src.exists():
@@ -260,7 +235,7 @@ def backup_services(dry_run=False):
 
 
 def backup_claude_code(dry_run=False):
-    section("6/10 Claude Code")
+    section("5/9 Claude Code")
 
     claude_dir = HOME / ".claude"
     dst_dir = REPO / "claude"
@@ -300,14 +275,14 @@ def backup_claude_code(dry_run=False):
 
 
 def backup_typora_themes(dry_run=False):
-    section("7/10 Typora Themes")
+    section("6/9 Typora Themes")
     src = HOME / "Library" / "Application Support" / "abnerworks.Typora" / "themes"
     dst = REPO / "typora" / "themes"
     copy_dir(src, dst, dry_run)
 
 
 def backup_shortcuts(dry_run=False):
-    section("8/10 Shortcuts (快捷指令列表)")
+    section("7/9 Shortcuts (快捷指令列表)")
     dst = REPO / "shortcuts_list.txt"
     if dry_run:
         info("[DRY-RUN] shortcuts list -> shortcuts_list.txt")
@@ -322,7 +297,7 @@ def backup_shortcuts(dry_run=False):
 
 
 def backup_ollama_models(dry_run=False):
-    section("9/10 Ollama 模型列表")
+    section("8/9 Ollama 模型列表")
     dst = REPO / "ollama_models.txt"
     if dry_run:
         info("[DRY-RUN] ollama list -> ollama_models.txt")
@@ -337,7 +312,7 @@ def backup_ollama_models(dry_run=False):
 
 
 def backup_oh_my_zsh_custom(dry_run=False):
-    section("10/10 Oh My Zsh Custom Plugins/Themes")
+    section("9/9 Oh My Zsh Custom Plugins/Themes")
     omz_custom = HOME / ".oh-my-zsh" / "custom"
     dst = REPO / "configs" / "omz-custom"
 
@@ -384,7 +359,6 @@ def cmd_backup(args):
         sys.exit(1)
 
     backup_homebrew(args.dry_run)
-    backup_fonts(args.dry_run)
     backup_configs(args.dry_run)
     backup_defaults(args.dry_run)
     backup_services(args.dry_run)

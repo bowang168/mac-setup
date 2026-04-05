@@ -27,21 +27,21 @@ python3 mac_restore.py --yes        # skip confirmations
 python3 mac_restore.py --only brew configs defaults
 ```
 
-Available steps: `prereqs`, `brew`, `fonts`, `configs`, `omz`, `defaults`, `services`, `claude`, `typora`, `ollama`, `hidefolders`
+Available steps: `prereqs`, `brew`, `configs`, `omz`, `defaults`, `services`, `claude`, `typora`, `ollama`, `hidefolders`
 
 ## What's Included
 
 | Directory / File | Content |
 |------------------|---------|
-| `mac_backup.py` | Automated backup: dotfiles, defaults, fonts, services, etc. |
+| `mac_backup.py` | Automated backup: dotfiles, defaults, services, etc. |
 | `mac_restore.py` | Automated restore: Homebrew, configs, defaults, Claude Code, etc. |
-| `human_step_guide.md` | Manual steps, verification checklist, eye health tips |
+| `human_step_guide.md` | Manual steps (incl. fonts backup/restore), verification checklist, eye health tips |
 | `Brewfile` | Homebrew packages and casks |
 | `configs/` | Dotfiles: zshrc, gitconfig, nvim, ghostty, aerospace, starship |
 | `defaults/` | macOS system preferences (plist exports) |
 | `claude/` | Claude Code settings and memory |
 | `services/` | Automator workflows |
-| `fonts/` | Custom fonts (recursive backup) |
+| `docs/` | Reference docs (font guide, eye health, etc.) |
 | `typora/` | Typora themes |
 | `bin/` | Custom scripts (theme toggle, app toggle) |
 | `docs/` | Reference docs (eye health guide, shortcuts, etc.) |

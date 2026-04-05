@@ -158,9 +158,9 @@ def step(name, label):
 # ── 0. Prerequisites ─────────────────────────────────────────────────
 
 
-@step("prereqs", "0/10 Prerequisites (Xcode CLT + Homebrew)")
+@step("prereqs", "0/9 Prerequisites (Xcode CLT + Homebrew)")
 def restore_prereqs(dry_run=False, **_):
-    section("0/10 Prerequisites")
+    section("0/9 Prerequisites")
 
     # ── Xcode Command Line Tools ──
     rc, _ = run("xcode-select -p")
@@ -228,9 +228,9 @@ def restore_prereqs(dry_run=False, **_):
 # ── 1. Homebrew Bundle ───────────────────────────────────────────────
 
 
-@step("brew", "1/10 Homebrew Bundle (安装工具和应用)")
+@step("brew", "1/9 Homebrew Bundle (安装工具和应用)")
 def restore_homebrew(dry_run=False, **_):
-    section("1/10 Homebrew Bundle")
+    section("1/9 Homebrew Bundle")
 
     ensure_brew_path()
 
@@ -261,36 +261,12 @@ def restore_homebrew(dry_run=False, **_):
         warn("部分包可能安装失败，请检查输出")
 
 
-# ── 2. Fonts ─────────────────────────────────────────────────────────
+# ── 2. Config Files ──────────────────────────────────────────────────
 
 
-@step("fonts", "2/10 Fonts")
-def restore_fonts(dry_run=False, **_):
-    section("2/10 Fonts")
-    src = REPO / "fonts"
-    dst = HOME / "Library" / "Fonts"
-    if not src.exists():
-        warn("fonts/ 备份不存在")
-        return
-    if dry_run:
-        count = sum(1 for _ in src.iterdir() if _.is_file())
-        info(f"[DRY-RUN] 恢复 {count} 个字体")
-        return
-    dst.mkdir(parents=True, exist_ok=True)
-    count = 0
-    for f in sorted(src.iterdir()):
-        if f.is_file():
-            shutil.copy2(f, dst / f.name)
-            count += 1
-    info(f"已恢复 {count} 个字体到 ~/Library/Fonts/")
-
-
-# ── 3. Config Files ──────────────────────────────────────────────────
-
-
-@step("configs", "3/10 Config Files")
+@step("configs", "2/9 Config Files")
 def restore_configs(dry_run=False, **_):
-    section("3/10 Config Files")
+    section("2/9 Config Files")
 
     single_files = {
         REPO / "configs" / ".zshrc": HOME / ".zshrc",
@@ -342,9 +318,9 @@ def restore_configs(dry_run=False, **_):
 # ── 4. Oh My Zsh ─────────────────────────────────────────────────────
 
 
-@step("omz", "4/10 Oh My Zsh + Plugins")
+@step("omz", "3/9 Oh My Zsh + Plugins")
 def restore_oh_my_zsh(dry_run=False, **_):
-    section("4/10 Oh My Zsh")
+    section("3/9 Oh My Zsh")
 
     omz_dir = HOME / ".oh-my-zsh"
     if not omz_dir.exists():
@@ -396,9 +372,9 @@ def restore_oh_my_zsh(dry_run=False, **_):
 # ── 5. macOS Defaults ────────────────────────────────────────────────
 
 
-@step("defaults", "5/10 macOS Defaults (系统偏好)")
+@step("defaults", "4/9 macOS Defaults (系统偏好)")
 def restore_defaults(dry_run=False, **_):
-    section("5/10 macOS Defaults")
+    section("4/9 macOS Defaults")
 
     defaults_dir = REPO / "defaults"
     if not defaults_dir.exists():
@@ -466,9 +442,9 @@ def restore_defaults(dry_run=False, **_):
 # ── 6. Services ──────────────────────────────────────────────────────
 
 
-@step("services", "6/10 Services (Automator Workflows)")
+@step("services", "5/9 Services (Automator Workflows)")
 def restore_services(dry_run=False, **_):
-    section("6/10 Services")
+    section("5/9 Services")
     src = REPO / "services"
     dst = HOME / "Library" / "Services"
     if not src.exists():
@@ -497,9 +473,9 @@ def restore_services(dry_run=False, **_):
 # ── 7. Claude Code ───────────────────────────────────────────────────
 
 
-@step("claude", "7/10 Claude Code")
+@step("claude", "6/9 Claude Code")
 def restore_claude_code(dry_run=False, **_):
-    section("7/10 Claude Code")
+    section("6/9 Claude Code")
 
     # ── 检查并安装 Claude Code CLI ──
     if has_cmd("claude"):
@@ -541,9 +517,9 @@ def restore_claude_code(dry_run=False, **_):
 # ── 8. Typora Themes ─────────────────────────────────────────────────
 
 
-@step("typora", "8/10 Typora Themes")
+@step("typora", "7/9 Typora Themes")
 def restore_typora_themes(dry_run=False, **_):
-    section("8/10 Typora Themes")
+    section("7/9 Typora Themes")
     src = REPO / "typora" / "themes"
     dst = HOME / "Library" / "Application Support" / "abnerworks.Typora" / "themes"
     copy_dir(src, dst, dry_run)
@@ -552,9 +528,9 @@ def restore_typora_themes(dry_run=False, **_):
 # ── 9. Hide Folders ────────────────────────────────────────────────
 
 
-@step("hidefolders", "9/10 隐藏 Home 目录文件夹")
+@step("hidefolders", "8/9 隐藏 Home 目录文件夹")
 def restore_hide_folders(dry_run=False, **_):
-    section("9/10 隐藏 Home 目录文件夹")
+    section("8/9 隐藏 Home 目录文件夹")
     folders = [
         HOME / "Applications",
         HOME / "Library",
@@ -584,9 +560,9 @@ def restore_hide_folders(dry_run=False, **_):
 # ── 10. Ollama 模型 (可选) ──────────────────────────────────────────
 
 
-@step("ollama", "10/10 Ollama 模型 (可选，耗时较长)")
+@step("ollama", "9/9 Ollama 模型 (可选，耗时较长)")
 def restore_ollama_models(dry_run=False, **_):
-    section("10/10 Ollama 模型")
+    section("9/9 Ollama 模型")
 
     # 检查 Ollama 是否已安装 (通过 Brewfile cask 或手动)
     if not has_cmd("ollama"):
@@ -643,7 +619,7 @@ def main():
         description="macOS 个人设置一键恢复",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
-步骤: prereqs, brew, fonts, configs, omz, defaults, services, claude, typora, hidefolders, ollama
+步骤: prereqs, brew, configs, omz, defaults, services, claude, typora, hidefolders, ollama
 
 示例:
   python3 mac_restore.py                    交互式恢复 (每步确认, 不含 ollama)
@@ -710,14 +686,15 @@ def main():
     print(f"\n{BOLD}{YELLOW}请继续完成手动步骤 (详见 human_step_guide.md):{RESET}")
     print(f"  1. 手动复制 ~/.ssh/ 和 ~/.bashrc_private")
     print(f"  2. 手动复制 ~/d/Personal_AI_Brain/")
-    print(f"  3. 登录 Apple ID / iCloud")
-    print(f"  4. 配置讯飞输入法")
-    print(f"  5. 登录 Brave Browser 同步")
-    print(f"  6. 登录 Docker Desktop")
-    print(f"  7. 在 System Settings > Displays 配置显示器")
-    print(f"  8. 配置 Shortcuts (快捷指令)")
-    print(f"  9. 启用 Finder 扩展: System Settings > General > Login Items & Extensions > Finder")
-    print(f"     确保 Shortcuts 中定义的 Quick Actions 已勾选")
+    print(f"  3. 手动恢复字体 (见 human_step_guide.md 字体部分)")
+    print(f"  4. 登录 Apple ID / iCloud")
+    print(f"  5. 配置讯飞输入法")
+    print(f"  6. 登录 Brave Browser 同步")
+    print(f"  7. 登录 Docker Desktop")
+    print(f"  8. 在 System Settings > Displays 配置显示器")
+    print(f"  9. 配置 Shortcuts (快捷指令)")
+    print(f"  10. 启用 Finder 扩展: System Settings > General > Login Items & Extensions > Finder")
+    print(f"      确保 Shortcuts 中定义的 Quick Actions 已勾选")
 
     print(f"\n{BOLD}{YELLOW}以下系统设置受 macOS 保护, defaults import 无法生效, 需手动确认:{RESET}")
     print(f"  {BOLD}Accessibility (System Settings > Accessibility > Display):{RESET}")

@@ -10,7 +10,6 @@ exclude:
   - defaults/
   - claude/
   - services/
-  - fonts/
   - typora/
   - bin/
   - docs/

@@ -7,6 +7,9 @@
 .env
 .env.*
 
+# Fonts (backup manually, too large for git)
+fonts/
+
 # macOS
 .DS_Store
 .AppleDouble
