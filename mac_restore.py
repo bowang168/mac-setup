@@ -10,7 +10,7 @@ mac_restore.py - macOS 个人设置一键恢复脚本
     python3 mac_restore.py --pull-ollama-models  # 只拉取 Ollama 模型
 
 前置条件:
-    1. 已从目标卷启动新 macOS
+    1. 已启动全新 macOS
     2. 本仓库已 clone 到新系统
     脚本会自动检测并安装: Xcode CLT, Homebrew, Oh My Zsh, Claude Code
 """

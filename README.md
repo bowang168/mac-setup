@@ -5,7 +5,7 @@
 
 macOS backup & restore automation for a keyboard-driven, eye-friendly, minimal setup.
 
-**Scenario**: MacBook Pro M3 Pro — primary volume + clean macOS setup, backup & restore.
+**Scenario**: MacBook Pro M3 Pro — clean macOS setup, backup & restore.
 
 ## Quick Start
 

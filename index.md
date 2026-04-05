@@ -7,7 +7,7 @@ title: mac-setup
 
 macOS backup & restore automation for a keyboard-driven, eye-friendly, minimal setup.
 
-**Scenario**: MacBook Pro M3 Pro — primary volume + clean macOS setup, backup & restore.
+**Scenario**: MacBook Pro M3 Pro — clean macOS setup, backup & restore.
 
 ---
 
@@ -75,10 +75,10 @@ Available steps: `prereqs`, `brew`, `configs`, `omz`, `defaults`, `services`, `c
 Some macOS settings are protected and cannot be restored via `defaults import`. See the full manual step guide for:
 
 - Backup & restore of sensitive files
-- External disk macOS installation
+- macOS installation on a new volume
 - Post-restore verification checklist
 - Eye health & display settings
-- Multi-volume switching
+- Multi-volume startup tips
 
 **[Read the Full Manual Step Guide](step-guide)**
 

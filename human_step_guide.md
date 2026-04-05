@@ -1,6 +1,6 @@
 # macOS 备份与恢复手动步骤
 
-> 场景: MacBook Pro M3 Pro — 全新 macOS 安装、备份与恢复 + 外置 1TB 盘 (个人)
+> 场景: MacBook Pro M3 Pro — 全新 macOS 安装、备份与恢复
 >
 > 自动化脚本: `mac_backup.py` / `mac_restore.py`
 >
@@ -89,14 +89,13 @@ git push
 
 ---
 
-## 二、目标卷安装 macOS
+## 二、安装 macOS 到目标卷
 
 ### 2.1 准备目标卷
 
-1. 连接 1TB 目标硬盘 (建议 USB-C / Thunderbolt SSD)
-2. 打开 **Disk Utility**
-3. 选择目标卷 → **Erase**:
-   - Name: `macOS Personal` (或你喜欢的名字)
+1. 打开 **Disk Utility**
+2. 选择目标卷 → **Erase**:
+   - Name: 自定义名称
    - Format: **APFS**
    - Scheme: **GUID Partition Map**
 
@@ -122,20 +121,17 @@ sudo /Applications/Install\ macOS\ Tahoe.app/Contents/Resources/createinstallmed
 
 ### 2.3 首次启动配置
 
-1. 从目标卷启动: 开机时按住电源键 → 选择目标卷
+1. 启动到目标卷: 开机时按住电源键 → 选择目标卷
 2. 完成 Setup Assistant:
-   - **不要** 使用 Migration Assistant (会带入 旧配置)
+   - 选择 **不使用** Migration Assistant (全新安装)
    - 创建本地用户
    - 登录 Apple ID (可以先跳过, 稍后再登录)
-3. 确认 **无 setup verification 提示** 出现
 
-### 2.4 设置默认启动盘
+### 2.4 设置默认启动卷
 
 ```
 System Settings > General > Startup Disk > 选择目标卷
 ```
-
-> **注意**: 切换回主系统时, 重启按住电源键选择主卷即可。
 
 ---
 
@@ -363,11 +359,8 @@ System Settings → Displays → Night Shift
 
 | 操作 | 方法 |
 |------|------|
-| 切换到新系统 (目标卷) | 重启 → 按住电源键 → 选择目标卷 |
-| 切换到主系统 (主卷) | 重启 → 按住电源键 → 选择 Macintosh HD |
-| 设置默认启动盘 | System Settings > General > Startup Disk |
-
-> **提示**: 目标卷未连接时, Mac 会自动从主卷启动。
+| 切换启动卷 | 重启 → 按住电源键 → 选择目标卷 |
+| 设置默认启动卷 | System Settings > General > Startup Disk |
 
 ---
 
