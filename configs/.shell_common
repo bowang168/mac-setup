@@ -186,23 +186,3 @@ fileurl() {
     echo "file://$(python3 -c "import urllib.parse; print(urllib.parse.quote('$(realpath "$1")'))")"
 }
 
-# ----------------------------------------------------------------------------
-# Work environment (ISDE / CMOS)
-# ----------------------------------------------------------------------------
-
-cff() {
-    if command -v REDACTED_TOOL &>/dev/null; then
-        REDACTED_TOOL -x SR "$1" && cd REDACTED_PATH/"$1"/
-    elif command -v REDACTED_TOOL &>/dev/null; then
-        REDACTED_TOOL access sr "$1" && cd REDACTED_PATH/"$1"/
-    else
-        echo "Error: neither REDACTED_TOOL nor REDACTED_TOOL found" >&2
-        return 1
-    fi
-}
-
-# Conditional PATH — only on work servers
-[[ -d REDACTED_PATH ]] \
-    && export PATH="$PATH:REDACTED_PATH"
-[[ -d REDACTED_PATH ]] \
-    && export PATH="$PATH:REDACTED_PATH"

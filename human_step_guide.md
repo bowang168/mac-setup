@@ -105,7 +105,7 @@ sudo /Applications/Install\ macOS\ Tahoe.app/Contents/Resources/createinstallmed
 1. 从目标卷启动: 开机时按住电源键 → 选择目标卷
 2. 完成 Setup Assistant:
    - **不要** 使用 Migration Assistant (会带入 旧配置)
-   - 创建本地用户 (建议用户名: `yourname`)
+   - 创建本地用户
    - 登录 Apple ID (可以先跳过, 稍后再登录)
 3. 确认 **无 setup verification 提示** 出现
 

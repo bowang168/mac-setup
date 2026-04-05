@@ -63,7 +63,7 @@
 
 for f in "$@"; do
     if [[ "$f" == *.pdf || "$f" == *.PDF ]]; then
-        /Users/yourname/.local/bin/smallpdf.py "$f"
+        "$HOME/.local/bin/smallpdf.py" "$f"
     fi
 done
 
