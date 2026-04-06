@@ -151,7 +151,7 @@ alias lg='lazygit'
 
 # System utilities
 alias ports='lsof -i -P -n | grep LISTEN'
-alias ip='curl -s ifconfig.me'
+[[ "$OS_TYPE" == "Darwin" ]] && alias ip='curl -s ifconfig.me'
 alias fix_stty='stty sane'
 alias cal='cal -3'
 alias cman='LANG=zh_CN.UTF-8 man'

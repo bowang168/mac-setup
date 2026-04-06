@@ -119,7 +119,7 @@ def copy_dir(src, dst, dry_run=False):
         info(f"[DRY-RUN] {src}/ ({count} files) -> {dst}/")
         return True
     dst.mkdir(parents=True, exist_ok=True)
-    shutil.copytree(src, dst, dirs_exist_ok=True)
+    shutil.copytree(src, dst, dirs_exist_ok=True, symlinks=True)
     count = sum(1 for _ in dst.rglob("*") if _.is_file())
     info(f"恢复 {count} 个文件 -> {dst}/")
     return True

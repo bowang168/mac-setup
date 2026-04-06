@@ -95,7 +95,7 @@ def copy_dir(src, dst, dry_run=False):
         return True
     if dst.exists():
         shutil.rmtree(dst)
-    shutil.copytree(src, dst, dirs_exist_ok=True)
+    shutil.copytree(src, dst, dirs_exist_ok=True, symlinks=True)
     count = sum(1 for _ in dst.rglob("*") if _.is_file())
     info(f"{src}/ ({count} files) -> {dst}/")
     return True
